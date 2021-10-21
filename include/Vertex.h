@@ -17,3 +17,6 @@ struct Vertex
 
 std::istream& operator>>(std::istream& istr, Vertex& v);
 std::ostream& operator<<(std::ostream& ostr, const Vertex& v);
+
+//add function to compare to vertices 
+//
