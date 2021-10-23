@@ -1,6 +1,7 @@
 #pragma once
 #include "Vertex.h"
 #include "Utilities.h"
+#include <cmath> //needed? 
 
 class Triangle {
 public:

@@ -40,6 +40,9 @@ Hourglass::Hourglass(const Triangle& lower)
 		Triangle upper(v0, v1, (-1 * lower.getHeight()));
 		m_upper = upper;
 	}
+
+	else
+		//set Default
 }
 
 double Hourglass::getLength() const
@@ -66,4 +69,8 @@ void Hourglass::setDefault()
 	m_len = distance(m_v0, m_v1);
 	m_height = calcHeight();
 	*/
+
+	Triangle upper(, lower
+			 lower (;
+
 }
