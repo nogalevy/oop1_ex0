@@ -11,45 +11,40 @@
 default rectangle
 */
 Rectangle::Rectangle()
-    : m_bottomLeft(Vertex(20.0, 10.0)),
-    m_topRight(Vertex(30.0, 20.0))
 {
-  saveVertices(m_bottomLeft, m_topRight);
+    saveDefault();
 }
 
 Rectangle::Rectangle (const Vertex& bottomLeft, const Vertex& topRight)
 {
-  if(topRight.isHigherThan(bottomLeft) && topRight.isToTheRightOf(bottomLeft))
-  {
-    if(bottomLeft.isValid() && topRight.isValid())
+  if(topRight.isHigherThan(bottomLeft) && topRight.isToTheRightOf(bottomLeft)
+      && (bottomLeft.isValid() && topRight.isValid()))
     {
         saveVertices(bottomLeft, topRight);
-        std::cout << " \n -- is valid = here !! ---\n" << m_bottomLeft.m_col << "\n";;
         return;
     }
-  }
-  Rectangle();
+  saveDefault();
 }
 
 Rectangle::Rectangle (const Vertex vertices[2])
-{
-   std::cout << " \n -- FROM ARRAY !! ---\n" << vertices[0].m_col << "\n";
-  Rectangle(vertices[0], vertices[1]);
-  return;
-}
+  : Rectangle(vertices[0], vertices[1])
+{ }
 
 Rectangle::Rectangle (double x0, double y0, double x1, double y1)
-{
-  Rectangle(Vertex(x0, y0), Vertex(x1, y1));
-}
+ : Rectangle(Vertex(x0, y0), Vertex(x1, y1))
+{ }
 
+
+// !!! ask about the Vertex-auto
 Rectangle::Rectangle (const Vertex& start, double width, double height)
 {
-  if(width < 0 || height < 0)
-    Rectangle();
+    auto t_r = Vertex(start.m_col + width, start.m_row + height);
+    if (width < 0 || height < 0)
+    {
+        saveDefault();
+    }
 
-  auto t_r = Vertex(start.m_col + width, start.m_row + height);
-  Rectangle(start, t_r);
+   saveVertices(start, t_r);  
 }
 
 //------------------- main functions -------------------
@@ -81,10 +76,6 @@ double Rectangle::getHeight()const
 void Rectangle::draw(Board& board)const
 {
     //BL -> TL    //TL -> TR    //TR -> BR    //BR -> BL
-    std::cout << "\n!!!!! === in draw === !!!!\n";
-    std::cout << m_bottomLeft.m_col << "\n";
-    std::cout << m_topLeft.m_col << "\n";
-
     board.drawLine(m_bottomLeft, m_topLeft);
     board.drawLine(m_topLeft, m_topRight);
     board.drawLine(m_topRight, m_bottomRight);
@@ -93,8 +84,7 @@ void Rectangle::draw(Board& board)const
 
 Rectangle Rectangle::getBoundingRectangle() const
 {
-    auto r = Rectangle(Vertex(0, 17), Vertex(24, 31));
-    return r;
+    return *this;
 }
 
 double Rectangle::getArea()const
@@ -117,6 +107,11 @@ bool Rectangle::scale(double factor)
 }
 
 //------------------------ sub function -------------------------------
+void Rectangle::saveDefault()
+{
+    saveVertices(Vertex(20, 10), Vertex(30, 20));
+}
+
 void Rectangle::saveVertices(const Vertex& bottomLeft, const Vertex& topRight)
 {
   m_bottomLeft = bottomLeft;
@@ -124,5 +119,6 @@ void Rectangle::saveVertices(const Vertex& bottomLeft, const Vertex& topRight)
   m_topRight = topRight;
   m_topLeft = Vertex(bottomLeft.m_col, topRight.m_row);
 
-  std::cout << "\n\n ----- MTL = " << m_topLeft.m_col << "\n";
+  std::cout << "\n\n ----- after insert = " << m_bottomLeft.m_col << "\n";
 }
+

@@ -60,6 +60,6 @@ public:
 
 private:
 	//members
-  
-  void saveVertices(const Vertex& bottomLeft, const Vertex& topRight);
+	void saveDefault();
+	void saveVertices(const Vertex& bottomLeft, const Vertex& topRight);
 };
