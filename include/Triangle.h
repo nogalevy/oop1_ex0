@@ -1,5 +1,8 @@
 #pragma once
 #include "Vertex.h"
+#include "Utilities.h"
+#include <cmath> //needed? 
+#include "Board.h"
 
 class Triangle {
 public:
@@ -8,40 +11,44 @@ public:
 	Vertex getVertex(int index) const; //returns vertex of index given
 	double getLength() const;
 	double getHeight() const;
+	void draw(Board& board);
+	double getArea();
+	double getPerimeter();
+	Vertex getCenter();
+	bool scale(double factor);
+
 
 private:
+	Vertex m_v0;
+	Vertex m_v1;
+	Vertex m_v2;
+	double m_len;
+	double m_height;
+	double calcHeight();
+	void setDefault();
 };
 
-Triangle::Triangle(const Vertex vertices[3])
+void Triangle::draw(Board& board)
 {
-	//(1) check that values of vertices are valid (macros)
-	//(2) check that first 2 vertices create a line parallel to x axis
-	//(3) check that it is an equilateral triangle
-	//if 1 2 or 3 are false, create default
+
 }
 
-Triangle :: Triangle(const Vertex& v0, const Vertex& v1, double height);
+double Triangle::getArea()
 {
-	//(1) check that values of vertices and height are valid (macros)
-	//^height is length, send calculated vertex?
-	//(2) check that first 2 vertices create a line parallel to x axis
-	//(3) check that it is an equilateral triangle 
-	//if 1 2 or 3 are false, create default
-	//HEIGHT CAN BE NEGATIVE
+	return (m_len * m_height) / 2;
 }
 
-Triangle :: Vertex getVertex(int index) const
+double Triangle::getPerimeter()
 {
-	//returns vertex of index given
+	return 3 * m_len;
 }
 
-Triangle :: double getLength() const
+Vertex Triangle::getCenter()
 {
-	//returns length of side in triangle
+
 }
 
-Triangle :: double getHeight() const
+bool Triangle::scale(double factor)
 {
-	//returns length of height in triangle
-	//line perpendicular to base of triangle
+
 }
