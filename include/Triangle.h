@@ -35,7 +35,7 @@ void Triangle::draw(Board& board)
 
 double Triangle::getArea()
 {
-	return (m_len * m_height) / 2
+	return (m_len * m_height) / 2;
 }
 
 double Triangle::getPerimeter()
@@ -48,7 +48,7 @@ Vertex Triangle::getCenter()
 
 }
 
-bool Triangle::scale(double factor);
+bool Triangle::scale(double factor)
 {
 
 }
