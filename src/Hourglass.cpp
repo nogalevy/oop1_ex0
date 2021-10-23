@@ -33,16 +33,14 @@ Hourglass::Hourglass(const Triangle& lower)
 		m_height = 2 * lower.getHeight();
 
 		//creating upper triangle
-		Vertex v0, v1;
-		v0.m_row = v1.m_row = (lower.getVertex(0)).m_row + m_height;
-		v0.m_col = (lower.getVertex(0)).m_col;
-		v1.m_col = (lower.getVertex(1)).m_col;
-		Triangle upper(v0, v1, (-1 * lower.getHeight()));
-		m_upper = upper;
+		Vertex v0((lower.getVertex(0)).m_col, (lower.getVertex(0)).m_row + m_height),
+			v1((lower.getVertex(1)).m_col, (lower.getVertex(0)).m_row + m_height);
+
+		m_upper = Triangle(v0, v1, (-1 * lower.getHeight()));;
 	}
 
 	else
-		//set Default
+		setDefault();
 }
 
 double Hourglass::getLength() const
@@ -59,18 +57,14 @@ double Hourglass::getHeight() const
 
 void Hourglass::setDefault()
 {
-	/*
-	m_lower = Triangle()
-	
-	m_v0.m_col = m_v0.m_row = m_v1.m_row = 20;
-	m_v1.m_col = 30;
-	m_v2.m_col = 25;
-	m_v2.m_row = 20 + sqrt(75);
-	m_len = distance(m_v0, m_v1);
-	m_height = calcHeight();
-	*/
+	Vertex verticesUpper[3], verticesLower[3];
+	verticesUpper[0] = Vertex(20, 20 + 2 * sqrt(75));
+	verticesUpper[1] = Vertex(30, 20 + 2 * sqrt(75));
+	verticesUpper[2] = Vertex(25, 20 + sqrt(75));
+	verticesLower[0] = Vertex(20, 20);
+	verticesLower[1] = Vertex(30, 20);
+	verticesLower[2] = Vertex(25, 20 + sqrt(75));
 
-	Triangle upper(, lower
-			 lower (;
-
+	m_upper = Triangle(verticesUpper);
+	m_lower = Triangle(verticesLower);
 }
