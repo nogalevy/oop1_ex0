@@ -2,6 +2,7 @@
 #include "Vertex.h"
 #include "Utilities.h"
 #include <cmath> //needed? 
+#include "Board.h"
 
 class Triangle {
 public:
@@ -10,6 +11,12 @@ public:
 	Vertex getVertex(int index) const; //returns vertex of index given
 	double getLength() const;
 	double getHeight() const;
+	void draw(Board& board);
+	double getArea();
+	double getPerimeter();
+	Vertex getCenter();
+	bool scale(double factor);
+
 
 private:
 	Vertex m_v0;
@@ -21,4 +28,27 @@ private:
 	void setDefault();
 };
 
+void Triangle::draw(Board& board)
+{
 
+}
+
+double Triangle::getArea()
+{
+	return (m_len * m_height) / 2
+}
+
+double Triangle::getPerimeter()
+{
+	return 3 * m_len;
+}
+
+Vertex Triangle::getCenter()
+{
+
+}
+
+bool Triangle::scale(double factor);
+{
+
+}
