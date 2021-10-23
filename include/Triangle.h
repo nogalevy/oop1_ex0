@@ -12,11 +12,11 @@ public:
 	double getLength() const;
 	double getHeight() const;
 	void draw(Board& board);
+	//getBoundingRectangle?
 	double getArea();
 	double getPerimeter();
 	Vertex getCenter();
 	bool scale(double factor);
-
 
 private:
 	Vertex m_v0;
@@ -30,7 +30,7 @@ private:
 
 void Triangle::draw(Board& board)
 {
-
+	board.drawLine(m_v0, m_v1);
 }
 
 double Triangle::getArea()

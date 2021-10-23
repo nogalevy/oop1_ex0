@@ -3,6 +3,7 @@
 #include "Vertex.h"
 #include "Triangle.h"
 #include "macros.h"
+#include "Board.h"
 
 class Hourglass {
 public:
@@ -10,6 +11,7 @@ public:
 	Hourglass(const Triangle& lower);
 	double getLength() const;
 	double getHeight() const;
+	//getBoundingRectangle?
 	void draw(Board& board);
 	double getArea();
 	double getPerimeter();

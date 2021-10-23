@@ -82,21 +82,20 @@ double Triangle::getHeight() const
 
 double Triangle::calcHeight()
 {
-	Vertex midpoint;
-
-	midpoint.m_col = m_v2.m_col;
-	midpoint.m_row = m_v0.m_row;
+	Vertex midpoint(m_v2.m_col, m_v0.m_row);
 
 	return distance(m_v2, midpoint);
-
 }
 
 void Triangle::setDefault()
 {
-	m_v0.m_col = m_v0.m_row = m_v1.m_row = 20;
-	m_v1.m_col = 30;
-	m_v2.m_col = 25;
-	m_v2.m_row = 20 + sqrt(75);
+	Vertex v0(20, 20),
+		v1(30, 20),
+		v2(25, 20 + sqrt(7));
+
+	m_v0 = v0;
+	m_v1 = v1;
+	m_v2 = v2;
 	m_len = distance(m_v0, m_v1);
 	m_height = calcHeight();
 }
