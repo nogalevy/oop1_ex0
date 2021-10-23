@@ -89,13 +89,10 @@ double Triangle::calcHeight()
 
 void Triangle::setDefault()
 {
-	Vertex v0(20, 20),
-		v1(30, 20),
-		v2(25, 20 + sqrt(7));
+	m_v0 = Vertex(20, 20);
+	m_v1 = Vertex(30, 20);
+	m_v2 = Vertex(25, 20 + sqrt(7));
 
-	m_v0 = v0;
-	m_v1 = v1;
-	m_v2 = v2;
 	m_len = distance(m_v0, m_v1);
 	m_height = calcHeight();
 }

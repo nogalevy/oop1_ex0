@@ -36,8 +36,7 @@ Hourglass::Hourglass(const Triangle& lower)
 		Vertex v0((lower.getVertex(0)).m_col, (lower.getVertex(0)).m_row + m_height),
 			v1((lower.getVertex(1)).m_col, (lower.getVertex(0)).m_row + m_height);
 
-		Triangle upper(v0, v1, (-1 * lower.getHeight()));
-		m_upper = upper;
+		m_upper = Triangle(v0, v1, (-1 * lower.getHeight()));;
 	}
 
 	else
@@ -65,9 +64,7 @@ void Hourglass::setDefault()
 	verticesLower[0] = Vertex(20, 20);
 	verticesLower[1] = Vertex(30, 20);
 	verticesLower[2] = Vertex(25, 20 + sqrt(75));
-	Triangle upper(verticesUpper),
-			 lower(verticesLower);
 
-	m_upper = upper;
-	m_lower = lower;
+	m_upper = Triangle(verticesUpper);
+	m_lower = Triangle(verticesLower);
 }
