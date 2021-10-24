@@ -8,7 +8,7 @@
 #include "Board.h"
 
 #define RECTANGLE           0
-#define TRIANGLE            0
+#define TRIANGLE            1
 #define SQUARE              0
 #define HOURGLASS           0
 
