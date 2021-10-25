@@ -45,11 +45,12 @@ Triangle::Triangle(const Vertex& v0, const Vertex& v1, double height)
 		{
 			m_v0 = v0;
 			m_v1 = v1;
+
+			return;
 		}
 	}
 
-	else
-		setDefault();
+	setDefault();
 }
 
 Vertex Triangle::getVertex(int index) const

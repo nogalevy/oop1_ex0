@@ -11,7 +11,7 @@ public:
 	Vertex getVertex(int index) const; //returns vertex of index given
 	double getLength() const;
 	double getHeight() const;
-	void draw(Board& board);
+	void draw(Board& board) const;
 	//getBoundingRectangle?
 	double getArea();
 	double getPerimeter();
@@ -28,7 +28,7 @@ private:
 	void setDefault();
 };
 
-void Triangle::draw(Board& board)
+void Triangle::draw(Board& board) const
 {
 	board.drawLine(m_v0, m_v1);
 }
