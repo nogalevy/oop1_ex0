@@ -53,13 +53,16 @@ public:
   Vertex getCenter() const;
   bool scale(double factor);
 
+
+private:
+	//members
   Vertex m_bottomRight; //bottom right ?
   Vertex m_bottomLeft; //bottom left
   Vertex m_topLeft; //top left ?
   Vertex m_topRight; //top right
-
-private:
-	//members
+  double m_width;
+  double m_height;
+  //--- sub functions ---
 	void saveDefault();
 	void saveVertices(const Vertex& bottomLeft, const Vertex& topRight);
 };

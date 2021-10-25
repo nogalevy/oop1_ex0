@@ -31,20 +31,18 @@ Rectangle::Rectangle (const Vertex vertices[2])
 { }
 
 Rectangle::Rectangle (double x0, double y0, double x1, double y1)
- : Rectangle(Vertex(x0, y0), Vertex(x1, y1))
+    : Rectangle(Vertex(x0, y0), Vertex(x1, y1));
 { }
 
 
 // !!! ask about the Vertex-auto
 Rectangle::Rectangle (const Vertex& start, double width, double height)
 {
-    auto t_r = Vertex(start.m_col + width, start.m_row + height);
+    //auto t_r = Vertex(start.m_col + width, start.m_row + height);
     if (width < 0 || height < 0)
-    {
         saveDefault();
-    }
 
-   saveVertices(start, t_r);  
+   saveVertices(start, Vertex(start.m_col + width, start.m_row + height));
 }
 
 //------------------- main functions -------------------
@@ -60,6 +58,8 @@ Vertex Rectangle::getTopRight()const
 {
     return m_topRight;
 }
+
+//use distance in utilitties
 //return width (Xr - Xl)
 double Rectangle::getWidth()const
 {
@@ -81,6 +81,7 @@ void Rectangle::draw(Board& board)const
     board.drawLine(m_topRight, m_bottomRight);
     board.drawLine(m_bottomRight, m_bottomLeft);
 }
+
 
 Rectangle Rectangle::getBoundingRectangle() const
 {
@@ -118,7 +119,5 @@ void Rectangle::saveVertices(const Vertex& bottomLeft, const Vertex& topRight)
   m_bottomRight = Vertex(topRight.m_col, bottomLeft.m_row);
   m_topRight = topRight;
   m_topLeft = Vertex(bottomLeft.m_col, topRight.m_row);
-
-  std::cout << "\n\n ----- after insert = " << m_bottomLeft.m_col << "\n";
 }
 
