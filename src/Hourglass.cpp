@@ -63,7 +63,7 @@ void Hourglass::setDefault()
 	verticesUpper[2] = Vertex(25, 20 + sqrt(75));
 	verticesLower[0] = Vertex(20, 20);
 	verticesLower[1] = Vertex(30, 20);
-	verticesLower[2] = Vertex(25, 20 + sqrt(75));
+	verticesLower[2] = Vertex(25, 20 + sqrt(75));//remove
 
 	m_upper = Triangle(verticesUpper);
 	m_lower = Triangle(verticesLower);
