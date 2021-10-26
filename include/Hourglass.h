@@ -11,11 +11,11 @@ public:
 	Hourglass(const Triangle& lower);
 	double getLength() const;
 	double getHeight() const;
-	//getBoundingRectangle?
-	void draw(Board& board);
-	double getArea();
-	double getPerimeter();
-	Vertex getCenter();
+	Rectangle getBoundingRectangle() const;
+	void draw(Board& board) const;
+	double getArea() const;
+	double getPerimeter() const;
+	Vertex getCenter() const;
 	bool scale(double factor);
 private:
 	Triangle m_upper;

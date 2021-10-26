@@ -27,11 +27,10 @@ Triangle::Triangle(const Vertex& v0, const Vertex& v1, double height)
 		&& sameRow(v0, v1) && v1.isToTheRightOf(v0))
 	{
 		m_len = distance(v0, v1);
-		m_v2.m_col = v0.m_col + m_len / 2;
+		m_v2.m_col = v0.m_col + (m_len / 2); 
 		m_v2.m_row = v0.m_row + height;
 
-		if (m_v2.isValid() && doubleEqual(m_len, distance(v1, m_v2))
-			&& doubleEqual(m_len, distance(m_v2, v0)))
+		if (m_v2.isValid())
 		{
 			m_v0 = v0;
 			m_v1 = v1;
@@ -54,7 +53,7 @@ Vertex Triangle::getVertex(int index) const
 	case 2:
 		return m_v2;
 	default:
-		//cout << "Incorrect index" << endl; //needed?
+		return m_v2;
 	}
 }
 
@@ -79,7 +78,7 @@ void Triangle::setDefault()
 {
 	m_v0 = Vertex(20, 20);
 	m_v1 = Vertex(30, 20);
-	m_v2 = Vertex(25, 20 + sqrt(7));
+	m_v2 = Vertex(25, 20 + std::sqrt(7));
 
 	m_len = distance(m_v0, m_v1);
 	m_height = calcHeight();
@@ -93,17 +92,17 @@ void Triangle::draw(Board& board) const
 	board.drawLine(m_v2, m_v0);
 }
 
-double Triangle::getArea()
+double Triangle::getArea() const
 {
-	return abs((m_len * m_height) / 2);
+	return std::abs((m_len * m_height) / 2);
 }
 
-double Triangle::getPerimeter()
+double Triangle::getPerimeter() const 
 {
-	return 3 * m_len;
+	return (3 * m_len);
 }
 
-Vertex Triangle::getCenter()
+Vertex Triangle::getCenter() const
 {
 	return Vertex((m_v0.m_col + m_v1.m_col + m_v2.m_col) / 3,
 		(m_v0.m_row + m_v1.m_row + m_v2.m_row) / 3);
@@ -129,12 +128,20 @@ bool Triangle::scale(double factor)
 	}
 
 
-	if (factor < 0 || !new_v0.isValid() || !new_v1.isValid() || !new_v2.isValid());
-	return false;
+	if (factor < 0 || !new_v0.isValid() || !new_v1.isValid() || !new_v2.isValid())
+		return false;
 
 	m_v0 = new_v0;
 	m_v1 = new_v1;
 	m_v2 = new_v2;
 
 	return true;
+}
+
+Rectangle Triangle::getBoundingRectangle() const
+{
+	if (m_height < 0)
+		return Rectangle(Vertex(m_v0.m_col, m_v2.m_row), m_len, std::abs(m_height));
+
+	return Rectangle(m_v0, m_len, m_height);
 }

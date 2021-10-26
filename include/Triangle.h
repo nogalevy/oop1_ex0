@@ -1,8 +1,9 @@
 #pragma once
 #include "Vertex.h"
 #include "Utilities.h"
-#include <cmath> //needed? 
+#include <cmath>
 #include "Board.h"
+#include "Rectangle.h"
 
 class Triangle {
 public: 
@@ -12,10 +13,10 @@ public:
 	double getLength() const;
 	double getHeight() const;
 	void draw(Board& board) const;
-	//getBoundingRectangle?
-	double getArea();
-	double getPerimeter();
-	Vertex getCenter();
+	Rectangle getBoundingRectangle() const;
+	double getArea() const;
+	double getPerimeter() const;
+	Vertex getCenter() const;
 	bool scale(double factor);
 
 private:
@@ -27,4 +28,3 @@ private:
 	double calcHeight();
 	void setDefault();
 };
-

@@ -12,7 +12,7 @@ Square::Square(const Vertex& bottomLeft, const Vertex& topRight)
 {
 	if (abs(topRight.m_col - bottomLeft.m_col) == abs(topRight.m_row - bottomLeft.m_row))
 	{
-        m_square = Rectangle(bottomLeft, topRight);
+        m_square(Rectangle(bottomLeft, topRight));
 	}
 }
 
