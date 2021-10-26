@@ -8,6 +8,7 @@ class Rectangle
 {
 public:
 	//===--- constructors ---===//
+	Rectangle() = delete;
 		/*
 		gets 2 vertices checks:
 		1. if in board

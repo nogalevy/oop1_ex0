@@ -43,9 +43,9 @@ Rectangle::Rectangle (const Vertex& start, double width, double height)
  //return BL vertex
 Vertex Rectangle::getBottomLeft()const
 {
-    std::cout << m_bottomLeft.m_col;
     return m_bottomLeft;
 }
+
 //return TR vertex
 Vertex Rectangle::getTopRight()const
 {

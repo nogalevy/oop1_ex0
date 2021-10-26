@@ -4,7 +4,9 @@
 #include "Board.h"
 #include "Rectangle.h"
 #include "Utilities.h"
-#include "Utilities.h"
+
+#include <iostream>
+#include <cmath>
 
 class Square
 {
@@ -32,5 +34,8 @@ public:
 private:
 	//members
 	const int DEFAULT_LEN = 10;
-	Rectangle m_square;
+	
+	//void saveSquare(const Vertex& bottomLeft, const Vertex& topRight);
+
+	Rectangle m_square;// = (Rectangle(Vertex(20, 10), Vertex(30, 20)));
 };
