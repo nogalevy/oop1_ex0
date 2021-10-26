@@ -5,10 +5,10 @@
 #include "Board.h"
 
 class Triangle {
-public:
+public: 
 	Triangle(const Vertex vertices[3]);
-	Triangle(const Vertex& v0, const Vertex& v1, double height); //vertices of line that is paralled to x axis
-	Vertex getVertex(int index) const; //returns vertex of index given
+	Triangle(const Vertex& v0, const Vertex& v1, double height); 
+	Vertex getVertex(int index) const; 
 	double getLength() const;
 	double getHeight() const;
 	void draw(Board& board) const;
@@ -28,27 +28,3 @@ private:
 	void setDefault();
 };
 
-void Triangle::draw(Board& board) const
-{
-	board.drawLine(m_v0, m_v1);
-}
-
-double Triangle::getArea()
-{
-	return (m_len * m_height) / 2;
-}
-
-double Triangle::getPerimeter()
-{
-	return 3 * m_len;
-}
-
-Vertex Triangle::getCenter()
-{
-
-}
-
-bool Triangle::scale(double factor)
-{
-
-}

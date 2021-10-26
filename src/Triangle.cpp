@@ -1,13 +1,9 @@
 #include "Triangle.h"
 
+
 Triangle::Triangle(const Vertex vertices[3])
+	:m_v0(vertices[0]), m_v1(vertices[1]), m_v2(vertices[2])
 {
-	//(1) check that values of vertices are valid (macros)
-	//(2) check that first 2 vertices create a line parallel to x axis
-	//(3) check that it is an equilateral triangle
-	//if 1 2 or 3 are false, create default
-
-
 	if (vertices[0].isValid() && vertices[1].isValid() && vertices[2].isValid()
 		&& sameRow(vertices[0], vertices[1]) && vertices[1].isToTheRightOf(vertices[0])
 		&& doubleEqual(m_len = distance(vertices[0], vertices[1]), distance(vertices[1], vertices[2]))
@@ -25,14 +21,8 @@ Triangle::Triangle(const Vertex vertices[3])
 }
 
 Triangle::Triangle(const Vertex& v0, const Vertex& v1, double height)
+	:m_v0(v0), m_v1(v1), m_height(height)
 {
-	//(1) check that values of vertices and height are valid (macros)
-	//^height is length, send calculated vertex?
-	//(2) check that first 2 vertices create a line parallel to x axis
-	//(3) check that it is an equilateral triangle 
-	//if 1 2 or 3 are false, create default
-	//HEIGHT CAN BE NEGATIVE
-
 	if (v0.isValid() && v1.isValid()
 		&& sameRow(v0, v1) && v1.isToTheRightOf(v0))
 	{
@@ -70,14 +60,11 @@ Vertex Triangle::getVertex(int index) const
 
 double Triangle::getLength() const
 {
-	//returns length of side in triangle
 	return m_len;
 }
 
 double Triangle::getHeight() const
 {
-	//returns length of height in triangle
-	//line perpendicular to base of triangle
 	return m_height;
 }
 
@@ -96,4 +83,58 @@ void Triangle::setDefault()
 
 	m_len = distance(m_v0, m_v1);
 	m_height = calcHeight();
+}
+
+
+void Triangle::draw(Board& board) const
+{
+	board.drawLine(m_v0, m_v1);
+	board.drawLine(m_v1, m_v2);
+	board.drawLine(m_v2, m_v0);
+}
+
+double Triangle::getArea()
+{
+	return abs((m_len * m_height) / 2);
+}
+
+double Triangle::getPerimeter()
+{
+	return 3 * m_len;
+}
+
+Vertex Triangle::getCenter()
+{
+	return Vertex((m_v0.m_col + m_v1.m_col + m_v2.m_col) / 3,
+		(m_v0.m_row + m_v1.m_row + m_v2.m_row) / 3);
+}
+
+
+bool Triangle::scale(double factor)
+{
+	Vertex center = getCenter();
+	Vertex new_v0, new_v1, new_v2;
+
+	if (m_height > 0)
+	{
+		new_v0 = Vertex(center.m_col - (center.m_col - m_v0.m_col) * factor, center.m_row - (center.m_row - m_v0.m_row) * factor);
+		new_v1 = Vertex(center.m_col + (m_v1.m_col - center.m_col) * factor, new_v0.m_row);
+		new_v2 = Vertex(center.m_col, center.m_row + (m_v2.m_row - center.m_row) * factor);
+	}
+	else
+	{
+		new_v0 = Vertex(center.m_col - (center.m_col - m_v0.m_col) * factor, center.m_row + (m_v0.m_row - center.m_row) * factor);
+		new_v1 = Vertex(center.m_col + (m_v1.m_col - center.m_col) * factor, new_v0.m_row);
+		new_v2 = Vertex(center.m_col, center.m_row - (center.m_row - m_v2.m_row) * factor);
+	}
+
+
+	if (factor < 0 || !new_v0.isValid() || !new_v1.isValid() || !new_v2.isValid());
+	return false;
+
+	m_v0 = new_v0;
+	m_v1 = new_v1;
+	m_v2 = new_v2;
+
+	return true;
 }
