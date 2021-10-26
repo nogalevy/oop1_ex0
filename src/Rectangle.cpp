@@ -55,12 +55,12 @@ Vertex Rectangle::getTopRight()const
 //return width (Xr - Xl)
 double Rectangle::getWidth()const
 {
-    return m_topRight.m_col - m_topLeft.m_col;
+    return m_topRight.m_col - m_bottomLeft.m_col;
 }
 //return height (Yt - Yb)
 double Rectangle::getHeight()const
 {
-    return  m_topRight.m_row - m_topRight.m_row;
+    return  m_topRight.m_row - m_bottomLeft.m_row;
 }
 
 
@@ -68,10 +68,13 @@ double Rectangle::getHeight()const
 void Rectangle::draw(Board& board)const
 {
     //BL -> TL    //TL -> TR    //TR -> BR    //BR -> BL
-    board.drawLine(m_bottomLeft, m_topLeft);
-    board.drawLine(m_topLeft, m_topRight);
-    board.drawLine(m_topRight, m_bottomRight);
-    board.drawLine(m_bottomRight, m_bottomLeft);
+    Vertex t_l = Vertex(m_bottomLeft.m_col, m_topRight.m_row),
+            b_r = Vertex(m_topRight.m_col, m_bottomLeft.m_row);;
+
+    board.drawLine(m_bottomLeft, t_l);
+    board.drawLine(t_l, m_topRight);
+    board.drawLine(m_topRight, b_r);
+    board.drawLine(b_r, m_bottomLeft);
 }
 
 
@@ -100,6 +103,21 @@ Vertex Rectangle::getCenter()const
 
 bool Rectangle::scale(double factor)
 {
+    Vertex center = getCenter();
+    Vertex new_b_l, new_t_r;
+
+    if (factor < 0) return false;
+
+    new_b_l = Vertex(center.m_col - (center.m_col - m_bottomLeft.m_col) * factor, center.m_row - (center.m_row - m_bottomLeft.m_row) * factor);
+    new_t_r = Vertex(center.m_col + (m_topRight.m_col - center.m_col) * factor, center.m_row + (m_topRight.m_row - center.m_row) * factor);
+ 
+    std::cout << new_b_l.m_col;
+
+    if (!new_b_l.isValid() || !new_t_r.isValid()) return false;
+
+    m_bottomLeft = new_b_l;
+    m_topRight = new_t_r;
+
     return true;
 }
 
@@ -113,11 +131,9 @@ void Rectangle::saveDefault()
 void Rectangle::saveVertices(const Vertex& bottomLeft, const Vertex& topRight)
 {
   m_bottomLeft = bottomLeft;
-  m_bottomRight = Vertex(topRight.m_col, bottomLeft.m_row);
   m_topRight = topRight;
-  m_topLeft = Vertex(bottomLeft.m_col, topRight.m_row);
 
-  m_height = distance(m_bottomLeft , m_topLeft);  // y
-  m_width = distance(m_bottomLeft, m_bottomRight);  // x
+  m_height = m_topRight.m_row - m_bottomLeft.m_row;  // y
+  m_width = m_topRight.m_col - m_bottomLeft.m_col;  // x
 }
 

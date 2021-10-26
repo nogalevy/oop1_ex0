@@ -8,10 +8,7 @@ Square::Square(const Vertex& bottomLeft, const Vertex& topRight)
     Vertex t_l(bottomLeft.m_col, topRight.m_row);
     if (doubleEqual(distance(t_l, topRight), distance(t_l, bottomLeft)))
     {
-        Rectangle new_square = Rectangle(bottomLeft, topRight);
-       
-        m_square = new_square;
-        // m_square =Rectangle(bottomLeft, topRight);
+      m_square = Rectangle(bottomLeft, topRight);
     }
        
 }
@@ -87,5 +84,6 @@ Vertex Square::getCenter()const
 
 bool Square::scale(double factor)
 {
-    return true;
+
+    return m_square.scale(factor);
 }

@@ -42,10 +42,9 @@ private:
 	//
 	//members
 
-  Vertex m_bottomRight; //bottom right ?
   Vertex m_bottomLeft; //bottom left
-  Vertex m_topLeft; //top left ?
   Vertex m_topRight; //top right
+
   double m_width;
   double m_height;
   //--- sub functions ---
