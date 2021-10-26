@@ -7,13 +7,6 @@
 
 
 //------------- constructor ------------------
-/*
-default rectangle
-*/
-Rectangle::Rectangle()
-{
-    saveDefault();
-}
 
 Rectangle::Rectangle (const Vertex& bottomLeft, const Vertex& topRight)
 {
@@ -31,20 +24,18 @@ Rectangle::Rectangle (const Vertex vertices[2])
 { }
 
 Rectangle::Rectangle (double x0, double y0, double x1, double y1)
- : Rectangle(Vertex(x0, y0), Vertex(x1, y1))
+    : Rectangle(Vertex(x0, y0), Vertex(x1, y1))
 { }
 
 
 // !!! ask about the Vertex-auto
 Rectangle::Rectangle (const Vertex& start, double width, double height)
 {
-    auto t_r = Vertex(start.m_col + width, start.m_row + height);
+    //auto t_r = Vertex(start.m_col + width, start.m_row + height);
     if (width < 0 || height < 0)
-    {
         saveDefault();
-    }
 
-   saveVertices(start, t_r);  
+   saveVertices(start, Vertex(start.m_col + width, start.m_row + height));
 }
 
 //------------------- main functions -------------------
@@ -60,6 +51,8 @@ Vertex Rectangle::getTopRight()const
 {
     return m_topRight;
 }
+
+//use distance in utilitties
 //return width (Xr - Xl)
 double Rectangle::getWidth()const
 {
@@ -82,6 +75,7 @@ void Rectangle::draw(Board& board)const
     board.drawLine(m_bottomRight, m_bottomLeft);
 }
 
+
 Rectangle Rectangle::getBoundingRectangle() const
 {
     return *this;
@@ -89,16 +83,20 @@ Rectangle Rectangle::getBoundingRectangle() const
 
 double Rectangle::getArea()const
 {
-    return 1;
+    return m_height* m_width;
 }
 
 double Rectangle::getPerimeter()const
 {
-    return 1;
+    return 2*m_height + 2*m_width;
 }
+
 Vertex Rectangle::getCenter()const
 {
-    return Vertex(2, 2);
+    double x = m_bottomLeft.m_col + (m_width / 2);
+    double y = m_bottomLeft.m_row + (m_height / 2);
+
+    return Vertex(x, y);
 }
 
 bool Rectangle::scale(double factor)
@@ -110,6 +108,7 @@ bool Rectangle::scale(double factor)
 void Rectangle::saveDefault()
 {
     saveVertices(Vertex(20, 10), Vertex(30, 20));
+    m_height = m_width = DEFAULT_LEN;
 }
 
 void Rectangle::saveVertices(const Vertex& bottomLeft, const Vertex& topRight)
@@ -119,6 +118,7 @@ void Rectangle::saveVertices(const Vertex& bottomLeft, const Vertex& topRight)
   m_topRight = topRight;
   m_topLeft = Vertex(bottomLeft.m_col, topRight.m_row);
 
-  std::cout << "\n\n ----- after insert = " << m_bottomLeft.m_col << "\n";
+  m_height = distance(m_bottomLeft , m_topLeft);  // y
+  m_width = distance(m_bottomLeft, m_bottomRight);  // x
 }
 

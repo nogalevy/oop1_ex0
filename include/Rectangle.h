@@ -1,4 +1,5 @@
 #pragma once
+#include "Utilities.h"
 
 #include "Vertex.h"
 #include "Board.h"
@@ -6,12 +7,7 @@
 class Rectangle
 {
 public:
-
 	//===--- constructors ---===//
-		/*
-		default
-		*/
-	Rectangle();
 		/*
 		gets 2 vertices checks:
 		1. if in board
@@ -49,17 +45,22 @@ public:
   void draw(Board& board)const;
   Rectangle getBoundingRectangle() const;
   double getArea()const;
-  double getPerimeter()const;
+  double getPerimeter()const;	
   Vertex getCenter() const;
   bool scale(double factor);
+
+
+private:
+	const int DEFAULT_LEN = 10;
+	//members
 
   Vertex m_bottomRight; //bottom right ?
   Vertex m_bottomLeft; //bottom left
   Vertex m_topLeft; //top left ?
   Vertex m_topRight; //top right
-
-private:
-	//members
+  double m_width;
+  double m_height;
+  //--- sub functions ---
 	void saveDefault();
 	void saveVertices(const Vertex& bottomLeft, const Vertex& topRight);
 };
