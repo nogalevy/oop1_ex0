@@ -5,4 +5,5 @@
                                               "Hourglass.cpp"
                                               "Rectangle.cpp"
                                               "Triangle.cpp"
-                                              "Square.cpp")
+                                              "Square.cpp"
+                                              )

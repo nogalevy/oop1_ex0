@@ -1,14 +1,13 @@
 
 #include "Rectangle.h"
 
-#include "Vertex.h"
-
 #include <iostream>
 
 
 //------------- constructor ------------------
 
 Rectangle::Rectangle (const Vertex& bottomLeft, const Vertex& topRight)
+    : m_bottomLeft(bottomLeft), m_topRight(topRight) 
 {
   if(topRight.isHigherThan(bottomLeft) && topRight.isToTheRightOf(bottomLeft)
       && (bottomLeft.isValid() && topRight.isValid()))
