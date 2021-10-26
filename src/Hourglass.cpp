@@ -1,13 +1,8 @@
 #include "Hourglass.h"
 
-
 Hourglass::Hourglass(const Triangle& upper, const Triangle& lower)
+	:m_lower(lower), m_upper(upper)
 {
-	//receives two "correctly built" triangles
-	//(1) check that side lengths are equal
-	//(2) checks that there is one shared vertex and that the upper triangle faces upward and vice versa
-	//if (1) or (2) fail, create default hourglass
-
 	if ((upper.getLength() == lower.getLength())
 		&& (verticesEqual(upper.getVertex(2), lower.getVertex(2)))
 		&& (upper.getVertex(0).isHigherThan(lower.getVertex(0))))
@@ -23,9 +18,8 @@ Hourglass::Hourglass(const Triangle& upper, const Triangle& lower)
 }
 
 Hourglass::Hourglass(const Triangle& lower)
+	:m_lower(lower), m_upper(lower)
 {
-	//check if able to build upper triangle or if it will be outside of board
-	//if not builds default?
 	if (0 <= (lower.getVertex(0)).m_col + lower.getHeight() <= MAX_COL)
 	{
 		m_lower = lower;
@@ -45,13 +39,11 @@ Hourglass::Hourglass(const Triangle& lower)
 
 double Hourglass::getLength() const
 {
-	//returns length of sides of hourglass
 	return m_len;
 }
 
 double Hourglass::getHeight() const
 {
-	//returns height of hourglass (sum of heights of triangles)
 	return m_height;
 }
 
@@ -63,8 +55,37 @@ void Hourglass::setDefault()
 	verticesUpper[2] = Vertex(25, 20 + sqrt(75));
 	verticesLower[0] = Vertex(20, 20);
 	verticesLower[1] = Vertex(30, 20);
-	verticesLower[2] = Vertex(25, 20 + sqrt(75));//remove
+	verticesLower[2] = verticesUpper[2];
 
 	m_upper = Triangle(verticesUpper);
 	m_lower = Triangle(verticesLower);
+}
+
+
+double Hourglass::getArea()
+{
+	return 2 * m_lower.getArea();
+}
+
+double Hourglass::getPerimeter()
+{
+	return 6 * m_len;
+}
+
+Vertex Hourglass::getCenter()
+{
+	return m_lower.getVertex(2);
+}
+
+
+void Hourglass::draw(Board& board)
+{
+	m_upper.draw(board);
+	m_lower.draw(board);
+}
+
+
+bool Hourglass::scale(double factor)
+{
+	return m_upper.scale(factor) && m_lower.scale(factor);
 }

@@ -25,28 +25,3 @@ private:
 	void setDefault();
 };
 
-
-void Hourglass::draw(Board& board)
-{
-
-}
-
-double Hourglass::getArea()
-{
-	return 2 * m_lower.getArea();
-}
-
-double Hourglass::getPerimeter()
-{
-	return 6 * m_len;
-}
-
-Vertex Hourglass::getCenter()
-{
-	return m_lower.getVertex(2);
-}
-
-bool Hourglass::scale(double factor)
-{
-
-}
