@@ -1,18 +1,18 @@
 
 #include "Square.h"
 
-#include "Vertex.h"
-
-#include <iostream>
-#include <cmath>
-
 
 Square::Square(const Vertex& bottomLeft, const Vertex& topRight)
-	:m_square(Rectangle(Vertex(20, 10), Vertex(30, 20)))
+    : m_square(bottomLeft, topRight)
 {
-	if (abs(topRight.m_col - bottomLeft.m_col) == abs(topRight.m_row - bottomLeft.m_row))
+    Vertex t_l(bottomLeft.m_col, topRight.m_row);
+	if (distance(t_l, topRight) == distance( t_l, bottomLeft) )
 	{
-        m_square = Rectangle(bottomLeft, topRight);
+       //Rectangle m_square(bottomLeft, topRight);
+        Rectangle square(bottomLeft, topRight);
+        m_square = square;
+       // m_square = Rectangle(bottomLeft, topRight);
+
 	}
 }
 
