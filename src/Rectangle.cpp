@@ -1,8 +1,7 @@
-
 #include "Rectangle.h"
 
-// -----================ constructors ================-----
 
+// -----================ constructors ================-----
 //----
 Rectangle::Rectangle (const Vertex& bottomLeft, const Vertex& topRight)
     : m_bottomLeft(bottomLeft), m_topRight(topRight) 
@@ -36,7 +35,6 @@ Rectangle::Rectangle (const Vertex& start, double width, double height)
 }
 
 // -----================ main functions (public) ================-----
-
 //----
 Vertex Rectangle::getBottomLeft()const
 {
@@ -110,8 +108,10 @@ bool Rectangle::scale(double factor)
 
     if (factor < 0) return false;
 
-    new_b_l = Vertex(center.m_col - (center.m_col - m_bottomLeft.m_col) * factor, center.m_row - (center.m_row - m_bottomLeft.m_row) * factor);
-    new_t_r = Vertex(center.m_col + (m_topRight.m_col - center.m_col) * factor, center.m_row + (m_topRight.m_row - center.m_row) * factor);
+    new_b_l = Vertex(center.m_col - (center.m_col - m_bottomLeft.m_col) * factor, 
+                    center.m_row - (center.m_row - m_bottomLeft.m_row) * factor);
+    new_t_r = Vertex(center.m_col + (m_topRight.m_col - center.m_col) * factor,
+                    center.m_row + (m_topRight.m_row - center.m_row) * factor);
  
     if (!new_b_l.isValid() || !new_t_r.isValid()) return false;
 
@@ -123,7 +123,6 @@ bool Rectangle::scale(double factor)
 
 
 // -----================ sub functions (private) ================-----
-
 //----
 void Rectangle::saveDefault()
 {
