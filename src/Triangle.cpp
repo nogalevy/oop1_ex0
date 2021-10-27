@@ -1,6 +1,8 @@
 #include "Triangle.h"
 
 
+// -----================ constructors ================-----
+//----
 Triangle::Triangle(const Vertex vertices[3])
 	:m_v0(vertices[0]), m_v1(vertices[1]), m_v2(vertices[2])
 {
@@ -20,6 +22,7 @@ Triangle::Triangle(const Vertex vertices[3])
 		setDefault();
 }
 
+//----
 Triangle::Triangle(const Vertex& v0, const Vertex& v1, double height)
 	:m_v0(v0), m_v1(v1), m_height(height)
 {
@@ -42,6 +45,8 @@ Triangle::Triangle(const Vertex& v0, const Vertex& v1, double height)
 	setDefault();
 }
 
+// -----================ main functions (public) ================-----
+//----
 Vertex Triangle::getVertex(int index) const
 {
 	switch (index)
@@ -57,34 +62,21 @@ Vertex Triangle::getVertex(int index) const
 	}
 }
 
+//----
 double Triangle::getLength() const
 {
 	return m_len;
 }
 
+//----
 double Triangle::getHeight() const
 {
 	return m_height;
 }
 
-double Triangle::calcHeight()
-{
-	Vertex midpoint(m_v2.m_col, m_v0.m_row);
-
-	return distance(m_v2, midpoint);
-}
-
-void Triangle::setDefault()
-{
-	m_v0 = Vertex(20, 20);
-	m_v1 = Vertex(30, 20);
-	m_v2 = Vertex(25, 20 + std::sqrt(7));
-
-	m_len = distance(m_v0, m_v1);
-	m_height = calcHeight();
-}
 
 
+//----
 void Triangle::draw(Board& board) const
 {
 	board.drawLine(m_v0, m_v1);
@@ -92,23 +84,26 @@ void Triangle::draw(Board& board) const
 	board.drawLine(m_v2, m_v0);
 }
 
+//----
 double Triangle::getArea() const
 {
 	return std::abs((m_len * m_height) / 2);
 }
 
-double Triangle::getPerimeter() const 
+//----
+double Triangle::getPerimeter() const
 {
 	return (3 * m_len);
 }
 
+//----
 Vertex Triangle::getCenter() const
 {
 	return Vertex((m_v0.m_col + m_v1.m_col + m_v2.m_col) / 3,
 		(m_v0.m_row + m_v1.m_row + m_v2.m_row) / 3);
 }
 
-
+//----
 bool Triangle::scale(double factor)
 {
 	Vertex center = getCenter();
@@ -138,10 +133,32 @@ bool Triangle::scale(double factor)
 	return true;
 }
 
+//----
 Rectangle Triangle::getBoundingRectangle() const
 {
 	if (m_height < 0)
 		return Rectangle(Vertex(m_v0.m_col, m_v2.m_row), m_len, std::abs(m_height));
 
 	return Rectangle(m_v0, m_len, m_height);
+}
+
+
+// -----================ sub functions (private) ================-----
+//----
+double Triangle::calcHeight()
+{
+	Vertex midpoint(m_v2.m_col, m_v0.m_row);
+
+	return distance(m_v2, midpoint);
+}
+
+//----
+void Triangle::setDefault()
+{
+	m_v0 = Vertex(20, 20);
+	m_v1 = Vertex(30, 20);
+	m_v2 = Vertex(25, 20 + std::sqrt(7));
+
+	m_len = distance(m_v0, m_v1);
+	m_height = calcHeight();
 }

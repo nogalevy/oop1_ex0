@@ -2,10 +2,9 @@
 
 #include <iostream>
 
-using std::cin;
-using std::cout;
-using std::endl;
 
+// -----================ constructors ================-----
+//----
 Hourglass::Hourglass(const Triangle& upper, const Triangle& lower)
 	:m_lower(lower), m_upper(upper)
 {
@@ -18,11 +17,10 @@ Hourglass::Hourglass(const Triangle& upper, const Triangle& lower)
 		m_len = upper.getLength();
 		m_height = upper.getHeight() + lower.getHeight();
 	}
-
-	else
-		setDefault();
+	else setDefault();
 }
 
+//----
 Hourglass::Hourglass(const Triangle& lower)
 	:m_lower(lower), m_upper(lower)
 {
@@ -36,21 +34,23 @@ Hourglass::Hourglass(const Triangle& lower)
 		m_height = 2* lower.getHeight();
 		m_upper = Triangle(v0, v1, (-1 * lower.getHeight()));
 	}
-	
-	else
-		setDefault();
+	else setDefault();
 }
 
+// -----================ main functions (public) ================-----
+//----
 double Hourglass::getLength() const
 {
 	return m_len;
 }
 
+//----
 double Hourglass::getHeight() const
 {
 	return m_height;
 }
 
+//----
 void Hourglass::setDefault()
 {
 	Vertex verticesUpper[3], verticesLower[3];
@@ -65,36 +65,38 @@ void Hourglass::setDefault()
 	m_lower = Triangle(verticesLower);
 }
 
-
+//----
 double Hourglass::getArea() const
 {
 	return (2 * m_lower.getArea());
 }
 
+//----
 double Hourglass::getPerimeter() const
 {
 	return (6 * m_len);
 }
 
+//----
 Vertex Hourglass::getCenter() const
 {
 	return m_lower.getVertex(2);
 }
 
-
+//----
 void Hourglass::draw(Board& board) const
 {
-	cout << "drawing" << endl;
 	m_upper.draw(board);
 	m_lower.draw(board);
 }
 
-
+//----
 bool Hourglass::scale(double factor)
 {
 	return m_upper.scale(factor) && m_lower.scale(factor);
 }
 
+//----
 Rectangle Hourglass::getBoundingRectangle() const
 {
 	return Rectangle(m_lower.getVertex(0), m_len, std::abs(m_height));
