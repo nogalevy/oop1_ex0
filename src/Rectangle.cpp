@@ -25,7 +25,7 @@ Rectangle::Rectangle (double x0, double y0, double x1, double y1)
     : Rectangle(Vertex(x0, y0), Vertex(x1, y1))
 { }
 
-//----
+//----start = bottom left
 Rectangle::Rectangle (const Vertex& start, double width, double height)
 {
     if (width < 0 || height < 0)
@@ -106,7 +106,7 @@ bool Rectangle::scale(double factor)
     Vertex center = getCenter();
     Vertex new_b_l, new_t_r;
 
-    if (factor < 0) return false;
+    if (factor <= 0) return false;
 
     new_b_l = Vertex(center.m_col - (center.m_col - m_bottomLeft.m_col) * factor, 
                     center.m_row - (center.m_row - m_bottomLeft.m_row) * factor);
