@@ -21,9 +21,9 @@ Triangle::Triangle(const Vertex vertices[3])
 	
 	
 	if (!(m_v0.isValid() && m_v1.isValid() && m_v2.isValid()
-		&& sameRow(m_v0, m_v1) && m_v1.isToTheRightOf(m_v0)))
-		//&& doubleEqual(getLength(), distance(m_v1, m_v2))
-		//&& doubleEqual(getLength(), distance(m_v0, m_v2))))
+		&& sameRow(m_v0, m_v1) && m_v1.isToTheRightOf(m_v0)
+		&& doubleEqual(getLength(), distance(m_v1, m_v2))
+		&& doubleEqual(getLength(), distance(m_v0, m_v2))))
 		setDefault();
 }
 
