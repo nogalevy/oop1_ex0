@@ -6,7 +6,7 @@
 Rectangle::Rectangle (const Vertex& bottomLeft, const Vertex& topRight)
     : m_bottomLeft(bottomLeft), m_topRight(topRight) 
 {
-  if(topRight.isHigherThan(bottomLeft) && topRight.isToTheRightOf(bottomLeft)
+  if((topRight.isHigherThan(bottomLeft) && topRight.isToTheRightOf(bottomLeft) || verticesEqual(bottomLeft, topRight))
       && (bottomLeft.isValid() && topRight.isValid()))
     {
         saveVertices(bottomLeft, topRight);
@@ -28,7 +28,7 @@ Rectangle::Rectangle (double x0, double y0, double x1, double y1)
 //----
 Rectangle::Rectangle (const Vertex& start, double width, double height)
 {
-    if (width < 0 || height < 0)
+    if (width <= 0 || height <= 0)
         saveDefault();
 
     saveVertices(start, Vertex(start.m_col + width, start.m_row + height));
