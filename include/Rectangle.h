@@ -1,10 +1,10 @@
 	#pragma once
-	#include "Utilities.h"
 
+	#include "Utilities.h"
 	#include "Vertex.h"
 	#include "Board.h"
 
-	class Rectangle
+class Rectangle
 {
 public:
 	//===--- constructors ---===//
@@ -36,4 +36,5 @@ private:
 	//sub functions
 	void saveDefault();
 	void saveVertices(const Vertex& bottomLeft, const Vertex& topRight);
+	bool isRectangleVerticesValid(const Vertex& bottomLeft, const Vertex& topRight);
 };

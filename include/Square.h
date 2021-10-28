@@ -5,7 +5,6 @@
 #include "Rectangle.h"
 #include "Utilities.h"
 
-#include <iostream>
 #include <cmath>
 
 class Square

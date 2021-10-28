@@ -1,13 +1,11 @@
 #include "Rectangle.h"
 
-
 // -----================ constructors ================-----
-//----
+
 Rectangle::Rectangle (const Vertex& bottomLeft, const Vertex& topRight)
     : m_bottomLeft(bottomLeft), m_topRight(topRight) 
 {
-  if((topRight.isHigherThan(bottomLeft) && topRight.isToTheRightOf(bottomLeft) || verticesEqual(bottomLeft, topRight))
-      && (bottomLeft.isValid() && topRight.isValid()))
+  if(isRectangleVerticesValid(bottomLeft, topRight))
     {
         saveVertices(bottomLeft, topRight);
         return;
@@ -15,17 +13,20 @@ Rectangle::Rectangle (const Vertex& bottomLeft, const Vertex& topRight)
   saveDefault();
 }
 
-//----
+//------------------------------------
+
 Rectangle::Rectangle (const Vertex vertices[2])
     : Rectangle(vertices[0], vertices[1])
 { }
 
-//----
+//------------------------------------
+
 Rectangle::Rectangle (double x0, double y0, double x1, double y1)
     : Rectangle(Vertex(x0, y0), Vertex(x1, y1))
 { }
 
-//----start = bottom left
+//------------------------------------
+
 Rectangle::Rectangle (const Vertex& start, double width, double height)
 {
     if (width <= 0 || height <= 0)
@@ -35,31 +36,35 @@ Rectangle::Rectangle (const Vertex& start, double width, double height)
 }
 
 // -----================ main functions (public) ================-----
-//----
+
 Vertex Rectangle::getBottomLeft()const
 {
     return m_bottomLeft;
 }
 
-//----
+//------------------------------------
+
 Vertex Rectangle::getTopRight()const
 {
     return m_topRight;
 }
 
-//----
+//------------------------------------
+
 double Rectangle::getWidth()const
 {
     return m_width;
 }
 
-//----
+//------------------------------------
+
 double Rectangle::getHeight()const
 {
     return m_height;
 }
 
-//----
+//------------------------------------
+
 void Rectangle::draw(Board& board)const
 {
     //draw:
@@ -73,25 +78,29 @@ void Rectangle::draw(Board& board)const
     board.drawLine(b_r, m_bottomLeft);
 }
 
-//----
+//------------------------------------
+
 Rectangle Rectangle::getBoundingRectangle() const
 {
     return *this;
 }
 
-//----
+//------------------------------------
+
 double Rectangle::getArea()const
 {
     return (m_height * m_width);
 }
 
-//----
+//------------------------------------
+
 double Rectangle::getPerimeter()const
 {
-    return (2*m_height + 2*m_width);
+    return 2*(m_height + m_width);
 }
 
-//----
+//------------------------------------
+
 Vertex Rectangle::getCenter()const
 {
     double x = m_bottomLeft.m_col + (m_width / 2);
@@ -100,11 +109,12 @@ Vertex Rectangle::getCenter()const
     return Vertex(x, y);
 }
 
-//----
+//------------------------------------
+
 bool Rectangle::scale(double factor)
 {
     Vertex center = getCenter();
-    Vertex new_b_l, new_t_r;
+    Vertex new_b_l, new_t_r, b_r;
 
     if (factor <= 0) return false;
 
@@ -118,25 +128,41 @@ bool Rectangle::scale(double factor)
     m_bottomLeft = new_b_l;
     m_topRight = new_t_r;
 
+    b_r = Vertex(m_topRight.m_col, m_bottomLeft.m_row);
+
+    m_height = distance(b_r, m_topRight); // y
+    m_width = distance(b_r, m_bottomLeft);  // x
+
+
     return true;
 }
 
 
 // -----================ sub functions (private) ================-----
-//----
+
 void Rectangle::saveDefault()
 {
     saveVertices(Vertex(20, 10), Vertex(30, 20));
 }
 
-//----
+//------------------------------------
+
 void Rectangle::saveVertices(const Vertex& bottomLeft, const Vertex& topRight)
 {
-    auto b_r = Vertex(m_topRight.m_col, m_bottomLeft.m_row);
+    Vertex b_r = Vertex(topRight.m_col, bottomLeft.m_row);
     m_bottomLeft = bottomLeft;
     m_topRight = topRight;
 
     m_height = distance(b_r, m_topRight); // y
-    m_width = distance(b_r, m_topRight);  // x
+    m_width = distance(b_r, m_bottomLeft);  // x
 }
 
+//------------------------------------
+
+bool Rectangle::isRectangleVerticesValid(const Vertex& bottomLeft, const Vertex& topRight)
+{
+    return 
+        ((topRight.isHigherThan(bottomLeft) || sameRow(bottomLeft, topRight)) &&
+        (topRight.isToTheRightOf(bottomLeft) || sameCol(bottomLeft, topRight)) &&
+        (bottomLeft.isValid() && topRight.isValid()));
+}
