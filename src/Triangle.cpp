@@ -73,7 +73,7 @@ void Triangle::draw(Board& board) const
 {
 	board.drawLine(m_v0, m_v1);
 	board.drawLine(m_v1, m_v2);
-	board.drawLine(m_v0, m_v2);
+	board.drawLine(m_v2, m_v0);
 }
 
 //----
